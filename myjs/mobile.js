@@ -5,7 +5,8 @@ function moBile() {
 
 	            
 			
-			
+	var api_key = process.env.TUMBLR_API_KEY;
+    var key = "api_key=" + api_key;		
 
 	
 	$(function() {
@@ -82,8 +83,10 @@ function moBile() {
 			 			
 				
 		$(function(){
+			
 	 		$.ajax({
-    url: "http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?api_key=LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg",
+				
+    url: "http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?"+key,
     dataType: 'jsonp',
     success: function onData( posts ) {
 
@@ -162,7 +165,7 @@ function moBile() {
 		o += 20;
 		$.ajax({ 
 			
-			url: 'http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?api_key=LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg&offset=' + o,  
+			url: 'http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?' + key + '&offset=' + o,  
 			dataType: 'jsonp',
 			success: function onData(posts) { 
 				

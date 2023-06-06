@@ -168,7 +168,8 @@ function deskTop() {
 			
 function loadPosts () {
 	var offset = 0;
-    var key = "api_key=LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg";
+	var api_key = process.env.TUMBLR_API_KEY;
+    var key = "api_key=" + api_key;
     var api = "https://api.tumblr.com/v2/blog/" + query.value + ".tumblr.com/";
     var retrieve_more = function (offset) {
         $.ajax({
