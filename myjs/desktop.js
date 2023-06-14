@@ -40,11 +40,9 @@ function deskTop() {
     			};
 })();
 
-            playMusic();
+            
 
-            //Event Listener that will start a new song after a pause
-            //of randomly determined length.
-            myAudio.addEventListener('ended', function(){setTimeout(function(){playMusic();}, getRandomInterval(2,2));}, false);
+            
             
             var camera, scene, renderer;
 			var objects = [], player;
@@ -168,7 +166,7 @@ function deskTop() {
 			
 function loadPosts () {
 	var offset = 0;
-	var api_key = process.env.TUMBLR_API_KEY;
+	var api_key = "LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg";
     var key = "api_key=" + api_key;
     var api = "https://api.tumblr.com/v2/blog/" + query.value + ".tumblr.com/";
     var retrieve_more = function (offset) {

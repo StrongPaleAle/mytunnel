@@ -78,6 +78,14 @@ h3 {
   display: inline-block;
   font-family: 'Damion', cursive;
 }
+button{
+  margin: 0;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background: none;
+}
 .content-cont {
   width: 100%;
   height: 100%;
@@ -221,7 +229,7 @@ h3 {
   height: 100%;
   width: 2px;
   background-color: pink;
-  margin-left: 4.5%;
+  margin-left: calc(5vw - 1px);
   box-shadow: 0 2px 21px pink;
 }
 .moving-grid .container .moving-lines {
@@ -232,10 +240,10 @@ h3 {
   height: 100%;
 }
 .moving-grid .container .moving-lines .horz {
-  display: inline-block;
+  display: block;
   width: 100%;
-  height: 3px;
-  margin-top: 4.8%;
+  height: 2px;
+  margin-top: calc(5vw - 1px);
   background-color: pink;
   box-shadow: 2px 0 21px pink;
   -webkit-animation: lines 600ms linear infinite;
@@ -243,22 +251,22 @@ h3 {
 }
 @-webkit-keyframes lines {
   from {
-    -webkit-transform: translateY(-5500%);
-            transform: translateY(-5500%);
+    -webkit-transform: translateY(calc(-1 * (5vw - 2px)));
+            transform: translateY(calc(-1 * (5vw - 2px)));
   }
   to {
-    -webkit-transform: translateY(-500%);
-            transform: translateY(-500%);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
   }
 }
 @keyframes lines {
   from {
-    -webkit-transform: translateY(-5500%);
-            transform: translateY(-5500%);
+    -webkit-transform: translateY(calc(-1 * (5vw - 1px)));
+            transform: translateY(calc(-1 * (5vw - 1px)));
   }
   to {
-    -webkit-transform: translateY(-500%);
-            transform: translateY(-500%);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
   }
 }
 @-webkit-keyframes shine1 {
@@ -361,11 +369,18 @@ h3 {
 	content: "";
 	display: block;
 }
-
-.mobile .moving-grid{
+@media screen and (orientation: portrait) {
+  .moving-grid{
+    top: 89%;
+  }
+  .moving-grid .container{
 	
-	display: none;
+    -webkit-transform: rotateX(70deg) translateY(20%);
+            transform: rotateX(70deg) translateY(20%);
+  }
+  
 }
+
 .infos{
 	box-sizing: border-box;
 	position: fixed;
@@ -439,12 +454,29 @@ h3 {
 	color: #fff;
 	text-decoration: none;
 }
-.infobutton {
-	color: #00d5ff;
-	position: absolute;
+.control-nav{
+  position: absolute;
 	z-index: 999999;
 	right: 40px;
 	top: 40px;
+  display: flex;
+  gap: 10px;
+}
+.infobutton {
+	color: #00d5ff;
+	
+}
+.playbutton .fa-volume-off{
+  display: none;
+}
+.music-playing .playbutton .fa-volume-up{
+  display: none;
+}
+.music-playing .playbutton .fa-volume-off{
+  display: inline-block;
+}
+.playbutton{
+  color: #00d5ff;
 }
 #search{
 	

@@ -24,49 +24,57 @@ var isMobile = {
 	            
 	            
             
-			var randInterval = 0;
-            var songList = ["song1","song2","song3","song4","song5","song6","song7","song8","song9","song10","song11","song12","song13","song14","song15"];
-            var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
+var randInterval = 0;
+var songList = ["song1","song2","song3","song4","song5","song6","song7","song8","song9","song10","song11","song12","song13","song14","song15"];
+var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
+var setMusic = false;
+//Generates a random song, sets it attributes/properties, and 
+//appends a file extension that works with the browser.
+function getRandomSong(){
+    var randSong = songList[Math.floor(Math.random()*songList.length)]
+    if (myAudio.canPlayType('audio/mp3;')) {
+        myAudio.src="music/" + randSong + ".mp3";
+    } else {
+        myAudio.src="music/" + randSong + ".ogg";
+    }
+    myAudio.id="myAudio";
+    myAudio.volume=0.15;
+    myAudio.load();
+    myAudio.controls=false
+    myAudio.preload=false;
+    setMusic = true;
+}
 
-            //Generates a random song, sets it attributes/properties, and 
-            //appends a file extension that works with the browser.
-            function getRandomSong(){
-                var randSong = songList[Math.floor(Math.random()*songList.length)]
-                if (myAudio.canPlayType('audio/mp3;')) {
-                    myAudio.src="music/" + randSong + ".mp3";
-                } else {
-                    myAudio.src="music/" + randSong + ".ogg";
-                }
-                myAudio.id="myAudio";
-                myAudio.volume=0.15;
-                myAudio.load();
-                myAudio.controls=false
-                myAudio.preload=false;
-            }
+//Sets a random interval for the setTimeout Function with the
+//'variation' parameter being a random amount of time in 
+//seconds, and the 'range' parameter being a set amount of time 
+//in seconds.
+function getRandomInterval(variation, range){
+    randInterval = Math.floor((Math.random()*1000*variation)+(1000*range)); 
+    return randInterval;
+}   
 
-            //Sets a random interval for the setTimeout Function with the
-            //'variation' parameter being a random amount of time in 
-            //seconds, and the 'range' parameter being a set amount of time 
-            //in seconds.
-            function getRandomInterval(variation, range){
-                randInterval = Math.floor((Math.random()*1000*variation)+(1000*range)); 
-                return randInterval;
-            }   
             
-                       
 
-            //Gets a random song and plays that song.
-            function playMusic(){
-                getRandomSong();
-                myAudio.play();
-                console.log(myAudio);
-            }
-            var delay = ( function() {
-			var timer = 0;
-			return function(callback, ms) {
-			clearTimeout (timer);
-			timer = setTimeout(callback, ms);
-    			};
+//Gets a random song and plays that song.
+function playMusic(){
+    if(!setMusic){
+        getRandomSong();
+    }
+    myAudio.play();
+    
+    $('body').addClass('music-playing');
+}
+function stopMusic(){
+    myAudio.pause();
+    $('body').removeClass('music-playing');
+}
+var delay = ( function() {
+var timer = 0;
+return function(callback, ms) {
+clearTimeout (timer);
+timer = setTimeout(callback, ms);
+    };
 })();
 
 $( document ).ready(function() {
@@ -81,7 +89,17 @@ $( document ).ready(function() {
 			$('body').removeClass('info-open');
 		}
 		
-		})
+    });
+    $('.playbutton').click(function(evt){
+        if($('body').hasClass('music-playing')){
+            stopMusic();
+        }else{
+            playMusic();
+        }
+    });
+    //Event Listener that will start a new song after a pause
+            //of randomly determined length.
+            myAudio.addEventListener('ended', function(){setTimeout(function(){playMusic();}, getRandomInterval(2,2));}, false);
 	if( isMobile.any() ) {
 		console.log("MOBILE");
 		
@@ -118,8 +136,7 @@ $( document ).ready(function() {
 			evt.preventDefault();
 		})
 		
-	}
-	else if( !isMobile.any() ) {
+	} else if( !isMobile.any() ) {
 		
 		console.log("DESKTOP");
 		$('.infos').find('h1').append('<div class="shine one"></div><div class="shine two"></div><div class="shine three"></div><div class="shine four"></div><div class="shine five"></div>');
@@ -128,4 +145,4 @@ $( document ).ready(function() {
 	}
 	
 	
-	});
+});
