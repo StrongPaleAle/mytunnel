@@ -184,7 +184,7 @@
 			
 function loadPosts () {
 	var offset = 0;
-    var api_key = process.env.TUMBLR_API_KEY;
+    var api_key = "LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg";
     var key = "api_key=" + api_key;
     var api = "http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/";
     var retrieve_more = function (offset) {
@@ -226,7 +226,19 @@ function loadPosts () {
 						
 						image.style.position = 'absolute';
 						
-						image.src =  p.photos[0].alt_sizes[2].url;
+						var altsize = p.photos[0].alt_sizes[2];
+						
+						if (altsize) {
+							image.src =  p.photos[0].alt_sizes[2].url;
+						} else {
+							image.src =  p.photos[0].original_size.url;
+						}
+						
+						
+						
+						if(!image.src){
+							console.log(p)
+						}
 						element.appendChild( image );
 	
 						

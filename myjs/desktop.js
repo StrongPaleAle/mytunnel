@@ -58,7 +58,7 @@ function deskTop() {
 			
 			function init() {
 
-				camera = new THREE.PerspectiveCamera( 150, window.innerWidth / window.innerHeight * 0.5, 0.001, 10000 );
+				camera = new THREE.PerspectiveCamera( 150, window.innerWidth / window.innerHeight, 0.001, 10000 );
 				camera.position.y = 20;
 				camera.position.z = -5000;
 				
@@ -73,7 +73,7 @@ function deskTop() {
 
 				//
 
-				//controls = new THREE.DeviceOrientationControls( camera );
+				controls = new THREE.DeviceOrientationControls( camera );
 				
 				
 
@@ -205,7 +205,7 @@ function loadPosts () {
 							var object = this.properties.object;
 							
 							new TWEEN.Tween( object.position )
-								.to( { y: Math.random() * 5000 - 2000 }, 4000 )
+								.to( { y: Math.random() * 4000 - 2000 }, 5000 )
 								.easing( TWEEN.Easing.Exponential.Out )
 								.start();
 	

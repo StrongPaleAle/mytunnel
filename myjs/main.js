@@ -28,21 +28,39 @@ var randInterval = 0;
 var songList = ["song1","song2","song3","song4","song5","song6","song7","song8","song9","song10","song11","song12","song13","song14","song15"];
 var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
 var setMusic = false;
+var played = [];
 //Generates a random song, sets it attributes/properties, and 
 //appends a file extension that works with the browser.
 function getRandomSong(){
-    var randSong = songList[Math.floor(Math.random()*songList.length)]
-    if (myAudio.canPlayType('audio/mp3;')) {
-        myAudio.src="music/" + randSong + ".mp3";
-    } else {
-        myAudio.src="music/" + randSong + ".ogg";
+    var randSongNum = Math.floor(Math.random()*songList.length);
+    if(played.length == songList.length){
+        played = [];
     }
-    myAudio.id="myAudio";
-    myAudio.volume=0.15;
-    myAudio.load();
-    myAudio.controls=false
-    myAudio.preload=false;
-    setMusic = true;
+    if(played.includes(randSongNum)){
+        getRandomSong();
+    } else {
+        var randSong = songList[randSongNum]
+        played.push(randSongNum);
+        if (myAudio.canPlayType('audio/mp3;')) {
+            myAudio.src="music/" + randSong + ".mp3";
+        } else {
+            myAudio.src="music/" + randSong + ".ogg";
+        }
+        myAudio.id="myAudio";
+        myAudio.volume=0.15;
+        myAudio.load();
+        myAudio.controls=false
+        myAudio.preload=false;
+        setMusic = true;
+        //Event Listener that will start a new song after a pause
+            //of randomly determined length.
+        myAudio.addEventListener('ended', function(){
+            setTimeout(function(){
+                setMusic = false;
+                playMusic();
+            }, getRandomInterval(2,2));
+        }, false);
+    }
 }
 
 //Sets a random interval for the setTimeout Function with the
@@ -69,15 +87,43 @@ function stopMusic(){
     myAudio.pause();
     $('body').removeClass('music-playing');
 }
-var delay = ( function() {
-var timer = 0;
-return function(callback, ms) {
-clearTimeout (timer);
-timer = setTimeout(callback, ms);
-    };
-})();
+
+function goFullscreen(){
+    
+    var docElm = document.documentElement;
+    // go full-screen
+    if ($('body').hasClass('fullscreen')){
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+          }  else if(document.mozexitFullscreen) {
+                document.mozexitFullscreen();
+        
+          } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+          }
+          $('body').removeClass('fullscreen');
+    } else {
+    if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.webkitRequestFullscreen) {
+        docElm.webkitRequestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+      $('body').addClass('fullscreen');
+    }
+}
 
 $( document ).ready(function() {
+
+    var options = {};
+    var stereo = false;
+    var sound = true;
+    $('.mobile-wrapper').find('h1').append('<div class="shine one"></div><div class="shine two"></div><div class="shine three"></div><div class="shine four"></div><div class="shine five"></div>');
 	$('.infobutton').click(function(evt){
 		
 		if (!$('body').hasClass('info-open'))
@@ -97,19 +143,18 @@ $( document ).ready(function() {
             playMusic();
         }
     });
-    //Event Listener that will start a new song after a pause
-            //of randomly determined length.
-            myAudio.addEventListener('ended', function(){setTimeout(function(){playMusic();}, getRandomInterval(2,2));}, false);
+    $('.fullscreenbutton').click(function(evt){
+        goFullscreen();
+    });
+    
+
+
 	if( isMobile.any() ) {
 		console.log("MOBILE");
 		
-		$('.mobile-wrapper').find('h1').append('<div class="shine one"></div><div class="shine two"></div><div class="shine three"></div><div class="shine four"></div><div class="shine five"></div>');
 		
-		if (!$('body').hasClass('options-active'))
-			{
-				$('body').removeClass('options-active');
-				$('body').addClass('options-active')
-			}
+		
+		
 		if (!$('body').hasClass('mobile'))
 			{
 				$('body').removeClass('mobile');
@@ -135,14 +180,46 @@ $( document ).ready(function() {
 			
 			evt.preventDefault();
 		})
+        
 		
 	} else if( !isMobile.any() ) {
 		
 		console.log("DESKTOP");
+        options = {
+            fov : 150,
+            aspect : window.innerWidth / window.innerHeight,
+            near : 0.001,
+            far : 10000,
+            stereo : false,
+            camY : 20
+        }
+        
+        
+
 		$('.infos').find('h1').append('<div class="shine one"></div><div class="shine two"></div><div class="shine three"></div><div class="shine four"></div><div class="shine five"></div>');
 		
-		deskTop();
+		
 	}
-	
+    $('.setting').click(function(evt){
+        
+        $('.mobile-wrapper').addClass('setted');
+    });
+	$('.start').click(function(evt){
+        $('body').removeClass('options-active');
+        if($(this).hasClass('vr')){
+            stereo = true;
+            if (!$('body').hasClass('fullscreen')){
+
+                goFullscreen();
+            }
+        }
+        if($(this).hasClass('mute')){
+            sound = false;
+        }
+        sceneLoader(options, stereo, sound);
+        
+        
+        
+    })
 	
 });
