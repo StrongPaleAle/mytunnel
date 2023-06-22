@@ -25,7 +25,7 @@ var isMobile = {
 	            
             
 var randInterval = 0;
-var songList = ["song1","song2","song3","song4","song5","song6","song7","song8","song9","song10","song11","song12","song13","song14","song15"];
+var songList = ["song1","song2","song3","song4","song5","song6","song7","song8","song9","song10","song11","song12","song13","song15"];
 var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
 var setMusic = false;
 var played = [];

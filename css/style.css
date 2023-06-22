@@ -203,8 +203,7 @@ button{
 .moving-grid:before {
   content: '';
   position: absolute;
-  top: 8px;
-  left: ;
+  top: 0;
   width: 100%;
   height: 10px;
   background-image:linear-gradient(to top, rgba(255,192,203, 0.3), transparent);
@@ -336,9 +335,9 @@ button{
 	
 	font-family: 'wendyregular';
 	font-size: max(4vw,2rem);
-	color: red ;
+	color: #a0001c;
 	margin-top: max(11vw,4rem);
-	text-shadow: 1px 1px #fff, -1px -1px #fff, -1px 1px #fff, 1px -1px #fff, 1px 0px #fff, -1px 0px #fff, 0px -1px #fff, 0px 1px #fff, 0px 0px 12px #ee91ae;
+	text-shadow: 1px 1px #fff, -1px -1px #fff, -1px 1px #fff, 1px -1px #fff, 1px 0px #fff, -1px 0px #fff, 0px -1px #fff, 0px 1px #fff, 0px 0px 12px red;
 	
 }
 .mobile-wrapper .buttons{
@@ -423,11 +422,14 @@ button{
 .infos .inner::-webkit-scrollbar {
   display: none;
 }
-.mobile .infos{
-	width: 100vw;
-	left: 0;
-  transform: translateX(-100vw);
+@media screen and (max-width: 1024px){
+  .mobile .infos{
+    width: 100vw;
+    left: 0;
+    transform: translateX(-100vw);
+  }
 }
+
 .info-open .infos{
 	
 	transform: translateX(0);

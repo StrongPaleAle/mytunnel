@@ -43,31 +43,34 @@ function sceneLoader(options, stereo, sound) {
     controls = new THREE.DeviceOrientationControls(camera);
 
     var query = document.getElementById("query");
-    query.addEventListener(
-      "keyup",
-      function (event) {
-        if (event.keyCode === 13) {
+    if (query && query.value.length !== 0) {
+      query.addEventListener(
+        "keyup",
+        function (event) {
+          if (event.keyCode === 13) {
+            search(query.value);
+          }
+        },
+        false
+      );
+
+      var button = document.getElementById("button");
+      button.addEventListener(
+        "click",
+        function (event) {
           search(query.value);
-        }
-      },
-      false
-    );
+        },
+        false
+      );
 
-    var button = document.getElementById("button");
-    button.addEventListener(
-      "click",
-      function (event) {
-        search(query.value);
-      },
-      false
-    );
+      if (window.location.hash.length > 0) {
+        query.value = window.location.hash.substr(1);
+      }
 
-    if (window.location.hash.length > 0) {
-      query.value = window.location.hash.substr(1);
+      search(query.value);
+    } else {
+      search('cronofagiacontemporanea');
     }
-
-    search(query.value);
-
     //document.body.addEventListener("mousewheel", onMouseWheel, false);
 
     document.body.addEventListener(
@@ -93,40 +96,17 @@ function sceneLoader(options, stereo, sound) {
     window.addEventListener("resize", onWindowResize, false);
   }
 
-  function search(query) {
-    window.location.hash = query;
+  function search(queryValue) {
+    window.location.hash = queryValue;
 
-    for (var i = 0, l = objects.length; i < l; i++) {
-      var object = objects[i];
-      var delay = Math.random() * 1000;
-
-      new TWEEN.Tween(object.position)
-        .to({ y: -3000 }, 1000)
-        .delay(delay)
-        .easing(TWEEN.Easing.Exponential.In)
-        .start();
-
-      new TWEEN.Tween(object)
-        .to({}, 2000)
-        .delay(delay)
-        .onComplete(function () {
-          $(object).remove();
-          $(object).addClass("ended");
-
-          var index = objects.indexOf(this);
-          objects.splice(index, 1);
-        })
-        .start();
-    }
-
-    loadPosts();
+    loadPosts(queryValue);
   }
 
-  function loadPosts() {
+  function loadPosts(blog) {
     var offset = 0;
     var api_key = "LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg";
     var key = "api_key=" + api_key;
-    var api = "https://api.tumblr.com/v2/blog/" + query.value + ".tumblr.com/";
+    var api = "https://api.tumblr.com/v2/blog/" + blog + ".tumblr.com/";
     var retrieve_more = function (offset) {
       $.ajax({
         url: api + "posts/photo?limit=20&offset=" + offset + "&" + key,
