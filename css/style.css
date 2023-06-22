@@ -29,6 +29,13 @@
   font-weight: normal;
   font-style: normal; }
   
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 html, body {
 				height: 100%;
 			}
@@ -306,31 +313,21 @@ button{
 	width: 100%;
 	height: 100%;
 	background: rgba(0,0,0,0.3);
-	text-align: center;
     white-space: nowrap;
     top: 0;
 	text-align: center;
+	justify-content: center;
+  align-items: center;
+  padding: 10px;
 	
-	
-}
-.mobile-wrapper:before{
-	content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -.25em;
 }
 
-.mobile-wrapper .inner{
-	display: inline-block;
-    vertical-align: middle;
-    position: relative;
-   
-}
+
+
 
 .options-active .mobile-wrapper{
 	
-	display: block;
+	display: flex;
 	
 	
 }
@@ -497,6 +494,9 @@ button{
   text-shadow: 0px 0px 12px #000;
   white-space: normal;
 }
+.disclaimer .buttons{
+  gap: 1em;
+}
 .disclaimer .buttons > *{
   text-decoration: underline;
   font-weight: 700;
@@ -627,7 +627,7 @@ button{
     font-size: clamp(2.5rem, 4vw, 3.5rem);
   }
   .disclaimer{
-    padding: 30px 0 0;
+    padding: 10px 0 0;
     font-size: 1rem;
   }
   .mobile-wrapper h2{
