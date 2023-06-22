@@ -58,7 +58,10 @@ function deskTop() {
 			
 			function init() {
 
-				camera = new THREE.PerspectiveCamera( 150, window.innerWidth / window.innerHeight, 0.001, 10000 );
+				camera = new THREE.PerspectiveCamera( 150, 
+					window.innerWidth / window.innerHeight, 
+					0.001, 
+					10000 );
 				camera.position.y = 20;
 				camera.position.z = -5000;
 				

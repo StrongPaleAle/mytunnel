@@ -1,12 +1,9 @@
-function moBile() {
+function virtualReality() {
 
 	            
-	
-
-	            
-			
 	var api_key = "LyLuf1EPap7Z3SUIiaTnyc9sgU3HxHMuqUR1cyU2vkFZT3m8zg";
     var key = "api_key=" + api_key;		
+			
 
 	
 	$(function() {
@@ -33,7 +30,49 @@ function moBile() {
 	            
 	            
             });
-			
+			var randInterval = 0;
+            var songList = ["song1","song2","song3"];
+            var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
+
+            //Generates a random song, sets it attributes/properties, and 
+            //appends a file extension that works with the browser.
+            function getRandomSong(){
+                var randSong = songList[Math.floor(Math.random()*songList.length)]
+                if (myAudio.canPlayType('audio/mp3;')) {
+                    myAudio.src="music/" + randSong + ".mp3";
+                } else {
+                    myAudio.src="music/" + randSong + ".ogg";
+                }
+                myAudio.id="myAudio";
+                myAudio.volume=0.15;
+                myAudio.load();
+                myAudio.controls=false
+                myAudio.preload=false;
+            }
+
+            //Sets a random interval for the setTimeout Function with the
+            //'variation' parameter being a random amount of time in 
+            //seconds, and the 'range' parameter being a set amount of time 
+            //in seconds.
+            function getRandomInterval(variation, range){
+                randInterval = Math.floor((Math.random()*1000*variation)+(1000*range)); 
+                return randInterval;
+            }   
+            
+                       
+
+            //Gets a random song and plays that song.
+            function playMusic(){
+                getRandomSong();
+                myAudio.play();
+            }
+            var delay = ( function() {
+			var timer = 0;
+			return function(callback, ms) {
+			clearTimeout (timer);
+			timer = setTimeout(callback, ms);
+    			};
+})();
 
             playMusic();
 
@@ -55,13 +94,17 @@ function moBile() {
 			
 			function init() {
 
-				camera = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.001, 10000 );
+				camera = new THREE.PerspectiveCamera( 
+					120, 
+					window.innerWidth / window.innerHeight, 
+					0.001, 
+					10000 );
 				camera.position.y = 0;
 				camera.position.z = -5000;
 				
 				scene = new THREE.Scene();
 
-				renderer = new THREE.CSS3DRenderer();
+				renderer = new THREE.CSS3DStereoRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.domElement.style.position = 'absolute';
 				document.getElementById( 'container' ).appendChild( renderer.domElement );				
@@ -83,10 +126,8 @@ function moBile() {
 			 			
 				
 		$(function(){
-			
 	 		$.ajax({
-				
-    url: "http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?"+key,
+    url: "http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?" + key,
     dataType: 'jsonp',
     success: function onData( posts ) {
 
@@ -165,7 +206,7 @@ function moBile() {
 		o += 20;
 		$.ajax({ 
 			
-			url: 'http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?' + key + '&offset=' + o,  
+			url: 'http://api.tumblr.com/v2/blog/cronofagiacontemporanea.tumblr.com/posts?'+ key + '&offset=' + o,  
 			dataType: 'jsonp',
 			success: function onData(posts) { 
 				
@@ -233,7 +274,6 @@ function moBile() {
 	});
 			
 			});
-			
 
 			function move( delta ) {
 
@@ -291,4 +331,4 @@ function moBile() {
 				renderer.render( scene, camera );
 			}
 			};
-                    
+          

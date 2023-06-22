@@ -161,25 +161,18 @@ $( document ).ready(function() {
 				$('body').addClass('mobile')
 			}
 		
-		$('.vr-mobile').click(function(evt){
-			$('body').removeClass('options-active');
-			
-			console.log("VR ACTIVATED!");
-			virtualReality();
-			
-			
-			evt.preventDefault();
-			
-		})
-		$('.normal-mobile').click(function(evt){
-			$('body').removeClass('options-active');
-			
-			console.log("STANDARD MOBILE!");
-			moBile();
-			
-			
-			evt.preventDefault();
-		})
+        options = {
+            fov : 150,
+            stereo : false,
+            camY : 0,
+            objX1: 8000,
+            objX2: 4000,
+            objY1: 4000 ,
+            objY2: 2000,
+            objZ1: 8000,
+            objZ2: 20000,
+            speed: 10
+        }
         
 		
 	} else if( !isMobile.any() ) {
@@ -187,11 +180,15 @@ $( document ).ready(function() {
 		console.log("DESKTOP");
         options = {
             fov : 150,
-            aspect : window.innerWidth / window.innerHeight,
-            near : 0.001,
-            far : 10000,
             stereo : false,
-            camY : 20
+            camY : 20,
+            objX1: 3000,
+            objX2: 2000,
+            objY1: 2000 ,
+            objY2: 1000,
+            objZ1: 8000,
+            objZ2: 20000,
+            speed: 10
         }
         
         

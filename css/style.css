@@ -74,7 +74,7 @@ h1 {
   display: inline-block;
   font-family: 'Work Sans', sans-serif;
 }
-h3 {
+h3, .subtitle {
   display: inline-block;
   font-family: 'Damion', cursive;
 }
@@ -111,21 +111,21 @@ button{
 .text-body h1 {
   position: relative;
   text-transform: uppercase;
-  font-size: 10vw;
+  font-size: max(3rem, 10vw);
   letter-spacing: 4px;
   z-index: 1;
 }
-.text-body h1 span {
+.text-body h1 span:not(.subtitle) {
   color: transparent;
   background: -webkit-linear-gradient(#000000 0%, #113e87 22%, #10cccc 50%, #000000 51%, #e21ddc 78%, #e21ddc 78%, #ffffff 100%);
   background: linear-gradient(#000000 0%, #113e87 22%, #10cccc 50%, #000000 51%, #e21ddc 78%, #e21ddc 78%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.text-body h1 span:before {
+.text-body h1 span:not(.subtitle):before {
   content: attr(text);
 }
-.text-body h1 span:after {
+.text-body h1 span:not(.subtitle):after {
   content: attr(text);
   position: absolute;
   top: 0;
@@ -133,15 +133,15 @@ button{
   text-shadow: 3px 0px #fff, -3px 0px #fff, 0px 3px #fff, 0px -3px #fff, 3px 3px #fff, -3px -3px #fff, 3px -3px #fff, -3px 3px #fff;
   opacity: 0.1;
 }
-.text-body h3 {
+.text-body .subtitle{
       position: absolute;
     top: 75%;
     right: 20%;
     text-align: right;
-    font-size: 6vw;
+    font-size: max(1.75rem, 6vw);
     font-weight: 100;
     letter-spacing: 1px;
-    /* text-transform: capitalize; */
+    text-transform: none;
     -webkit-transform: skewY(-10deg);
     transform: skewY(-10deg);
     z-index: 1;
@@ -341,9 +341,9 @@ button{
 .mobile-wrapper h2{
 	
 	font-family: 'wendyregular';
-	font-size: 4vw;
+	font-size: max(4vw,2rem);
 	color: red ;
-	margin-top: 11vw;
+	margin-top: max(11vw,4rem);
 	text-shadow: 1px 1px #fff, -1px -1px #fff, -1px 1px #fff, 1px -1px #fff, 1px 0px #fff, -1px 0px #fff, 0px -1px #fff, 0px 1px #fff, 0px 0px 12px #ee91ae;
 	
 }
@@ -373,7 +373,7 @@ button{
     text-shadow: 0px 0px 8px #00d5ff;
     box-shadow: 0px 0px 8px #00d5ff;
   cursor: pointer;
-  min-width: 300px;
+  
   transition: all 0.3s ease-in-out;
 	text-decoration: none;
 }
@@ -415,7 +415,7 @@ button{
 	top: 0;
 	left: 0;
 	width: 50vw;
-	padding: 40px 0;
+	padding: 40px 0 60px;
 	background: rgba(0,0,0,0.8);
 	height: 100vh;
 	border-right: 3px solid #00d5ff;
@@ -440,7 +440,7 @@ button{
 .infos .inner{
 	
 	overflow: auto;
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 	height: 100%;
 	padding:  0 clamp(20px, 5vw, 80px);
   -ms-overflow-style: none;  /* IE and Edge */
@@ -450,16 +450,17 @@ button{
 .infos .text-body h1 {
     position: relative;
     text-transform: uppercase;
-    font-size: 5vw;
+    font-size: max(5vw, 3rem);
     letter-spacing: 4px;
     z-index: 1;
 }
 
 
 
-.infos .text-body h3{
+.infos .text-body .subtitle{
 	
-	font-size: 3vw;
+	font-size: max(3vw, 1.7rem);
+  text-transform: none;
 }
 .infos .inner div{
 	text-align: center;
@@ -470,7 +471,7 @@ button{
 	margin-top: 2vw;
 	
 }
-.infos .text-body h1 span:after {
+.infos .text-body h1 span:not(.subtitle):after {
     content: attr(text);
     position: absolute;
     top: 0;
@@ -480,7 +481,7 @@ button{
 }
 .infos p{
 	
-	margin-top: 10vw;
+	margin-top: max(10vw, 3rem);
 	color: #fff;
 	font-size: 1.2rem;
 	font-family: 'camingocoderegular';
@@ -495,6 +496,7 @@ button{
   font-size: 1.2rem;
   padding: 60px 0;
   text-shadow: 0px 0px 12px #000;
+  white-space: normal;
 }
 .disclaimer .buttons > *{
   text-decoration: underline;
@@ -511,7 +513,9 @@ button{
 	top: 40px;
   display: flex;
   gap: 1.5em;
+  text-shadow: 0px 0px 8px #000;
 }
+
 .control-nav button{
   color: #00d5ff;
   width: 48px;
@@ -536,8 +540,10 @@ button{
 @media screen and (max-width: 768px) {
   .control-nav{
     right: 20px;
-    top: 20px;
+    top: auto;
+    bottom: 10px;
     font-size: 0.75rem;
+    background-image: radial-gradient(closest-side at center, rgba(0,0,0,0.6), rgba(0,0,0,0) );
   }
   
 }

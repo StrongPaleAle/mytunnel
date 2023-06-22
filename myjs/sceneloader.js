@@ -18,9 +18,9 @@ function sceneLoader(options, stereo, sound) {
   function init() {
     camera = new THREE.PerspectiveCamera(
       options.fov,
-      options.aspect,
-      options.near,
-      options.far
+      window.innerWidth / window.innerHeight,
+      0.001,
+      10000
     );
     camera.position.y = options.camY;
     camera.position.z = -5000;
@@ -68,7 +68,7 @@ function sceneLoader(options, stereo, sound) {
 
     search(query.value);
 
-    document.body.addEventListener("mousewheel", onMouseWheel, false);
+    //document.body.addEventListener("mousewheel", onMouseWheel, false);
 
     document.body.addEventListener(
       "click",
@@ -192,10 +192,10 @@ function sceneLoader(options, stereo, sound) {
             element.appendChild(blocker);
 
             var object = new THREE.CSS3DObject(element);
-            object.position.x = Math.random() * 3000 - 2000;
-            object.position.y = Math.random() * 2000 - 1000;
+            object.position.x = Math.random() * options.objX1 - options.objX2;
+            object.position.y = Math.random() * options.objY1 - options.objY2;
 
-            object.position.z = Math.random() * 8000 - 20000;
+            object.position.z = Math.random() * options.objZ1 - options.objZ2;
             scene.add(object);
 
             objects.push(object);
@@ -262,7 +262,7 @@ function sceneLoader(options, stereo, sound) {
     TWEEN.update();
 
     if (auto === true) {
-      move(10);
+      move(options.speed);
     }
 
     controls.update();
