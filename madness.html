@@ -3,7 +3,18 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<title>my tunnel of lo(l/n)eliness</title>
+		<title>my tunnel of lo(l/n)eliness - madness</title>
+		<link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#403980" />
+		<meta name="msapplication-TileColor" content="#2e234c" />
+		<meta name="theme-color" content="#ffffff" />
 		<style>
 			html, body {
 				height: 100%;
@@ -24,100 +35,51 @@
 						
 			img{
 				-webkit-backface-visibility: visible; /* Chrome, Safari, Opera */
-   	backface-visibility: visible;
-   	min-width: 500px;
+   				backface-visibility: visible;
+   				min-width: 500px;
+				animation: none !important;
+			}
+			.control-nav{
+				background-color: rgba(0,0,0,0.5);
 			}
 		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-		<script type="text/javascript">
-                        
-             $(function() {
-
-	            $('body').on('click', '#container>div', function () {
-	            	console.log("yep")
-		        	// $(this).hide();
 		
-		            var docElm = document.documentElement;
-		
-		            // go full-screen
-		            if (docElm.requestFullscreen) {
-		                docElm.requestFullscreen();
-		            } else if (docElm.webkitRequestFullscreen) {
-		                docElm.webkitRequestFullscreen();
-		            } else if (docElm.mozRequestFullScreen) {
-		                docElm.mozRequestFullScreen();
-		            } else if (docElm.msRequestFullscreen) {
-		                docElm.msRequestFullscreen();
-		            }
-		            
-		         
-	
-	        	});
-	            
-	            
-	            
-            });
-			var randInterval = 0;
-            var songList = ["song1","song2","song3"];
-            var myAudio = new Audio("music/" + songList[Math.floor(Math.random()*songList.length)] + ".mp3");
-
-            //Generates a random song, sets it attributes/properties, and 
-            //appends a file extension that works with the browser.
-            function getRandomSong(){
-                var randSong = songList[Math.floor(Math.random()*songList.length)]
-                if (myAudio.canPlayType('audio/mp3;')) {
-                    myAudio.src="music/" + randSong + ".mp3";
-                } else {
-                    myAudio.src="music/" + randSong + ".ogg";
-                }
-                myAudio.id="myAudio";
-                myAudio.volume=0.15;
-                myAudio.load();
-                myAudio.controls=false
-                myAudio.preload=false;
-            }
-
-            //Sets a random interval for the setTimeout Function with the
-            //'variation' parameter being a random amount of time in 
-            //seconds, and the 'range' parameter being a set amount of time 
-            //in seconds.
-            function getRandomInterval(variation, range){
-                randInterval = Math.floor((Math.random()*1000*variation)+(1000*range)); 
-                return randInterval;
-            }   
-            
-                       
-
-            //Gets a random song and plays that song.
-            function playMusic(){
-                getRandomSong();
-                myAudio.play();
-            }
-
-        </script>
 	</head>
 	<body>
 		
 		<script type="text/javascript">
-            //Plays music on page load.
-            $('body').on('click', '#container>div', function () {
-
-            playMusic();
-
-            //Event Listener that will start a new song after a pause
-            //of randomly determined length.
-            myAudio.addEventListener('ended', function(){setTimeout(function(){playMusic();}, getRandomInterval(2,2));}, false);
-            });
+            $( document ).ready(function() {
+				var sound = true;
+				$('.playbutton').click(function(evt){
+					if($('body').hasClass('music-playing')){
+						stopMusic();
+					}else{
+						playMusic();
+					}
+				});
+				$('.fullscreenbutton').click(function(evt){
+					goFullscreen();
+				});
+			});
         </script>
 
 		<script src="js/three.min.js"></script>
 		<script src="js/tween.min.js"></script>
 		<script src="js/CSS3DRenderer.js"></script>
 		<script src="js/controls/DeviceOrientationControls.js"></script>
-
+		<script src="myjs/basicux.js"></script>
 		<div id="container"></div>
-		
-
+		<nav class="control-nav">
+			<button class="fullscreenbutton">
+			  <i class="fa fa-3x fa-arrows-alt" aria-hidden="true"></i>
+			</button>
+			<button class="playbutton">
+			  <i class="fa fa-3x fa-volume-off" aria-hidden="true"></i
+			  ><i class="fa fa-3x fa-volume-up" aria-hidden="true"></i>
+			</button>
+			<a href="index.html"><button class="backbutton"><i class="fa fa-3x fa-arrow-left" aria-hidden="true"></i></button></a>
+		  </nav>
 		<script>
 			var camera, scene, renderer;
 			var objects = [], player;
